@@ -52,7 +52,6 @@ import Department from "../models/department.js";
 //   }
 // };
 
-
 export const getLeavesById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -76,9 +75,6 @@ export const getLeavesById = async (req, res) => {
   }
 };
 
-
-
-
 // get all leaves 
 export const getAllleaves = async (req, res) => {
   try {
@@ -96,7 +92,7 @@ const leaves = await Leave.find()
     console.error("Get Leaves Error:", error.message);
     return res.status(500).json({ success: false, error: error.message });
   }
-};
+};  
 
 
 // get leave  mtlv viewleave on admin controller 

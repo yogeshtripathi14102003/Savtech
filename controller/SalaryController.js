@@ -1,8 +1,9 @@
 
-
 import Salary from "../models/salary.js";
 import mongoose from "mongoose";
 import Employee from "../models/Employee.js";
+import { response } from "express";
+
 
 const addSalary = async (req, res) => {
   try {
@@ -43,42 +44,7 @@ const addSalary = async (req, res) => {
 
 
 
-// const getSalary = async (req, res) => {
-//   try {
-//     const { id } = req.params; // could be employeeId or userId
-//     console.log("Requested ID:", id);
 
-//     let salary = await Salary.find({ employeeId: id })
-//       .populate('employeeId', 'employeeId');
-
-//     // If no salary found by employeeId, try finding by userId
-//     if (!salary || salary.length < 1) {
-//       const employee = await Employee.findOne({ userId: id });
-
-//       if (!employee) {
-//         return res.status(404).json({
-//           success: false,
-//           error: `No employee found for user ID: ${id}`,
-//         });
-//       }
-
-//       salary = await Salary.find({ employeeId: employee._id })
-//         .populate('employeeId', 'employeeId');
-//     }
-
-//     return res.status(200).json({
-//       success: true,
-//       data: salary,
-//     });
-
-//   } catch (error) {
-//     console.error("Salary fetch error:", error.message);
-//     return res.status(500).json({
-//       success: false,
-//       error: "Salary get server error",
-//     });
-//   }
-// };
 
 const getSalary = async (req, res) => {
   try {
@@ -193,39 +159,17 @@ const getAllSalaries = async (req, res) => {
 };
 
 
-// GET all table salaries
- const getoverSalaries = async (req, res) => {
+const getAllSaly = async (req, res) => {
   try {
-    const salaries = await Salary.find().populate({
-      path: 'employeeId',
-      select: 'employeeId department',
-      populate: {
-        path: 'department',
-        select: 'name'
-      }
-    });
+    const salaries = await Salary.find().populate("employeeId"); // optional: .sort({ payDate: -1 })
 
-    const formattedSalaries = salaries.map((salary, index) => ({
-      sno: index + 1,
-      employeeId: salary.employeeId?.employeeId || 'N/A',
-      basicsalary: salary.basicSalary || 0,
-      department: salary.employeeId?.department?.name || 'N/A',
-      allowance: salary.allowances || 0,
-      deduction: salary.deductions || 0
-    }));
-
-    return res.status(200).json({
-      success: true,
-      data: formattedSalaries,
-    });
+    return res.status(200).json({ success: true, data: salaries });
   } catch (error) {
     console.error("Get All Salaries Error:", error);
-    return res.status(500).json({
-      success: false,
-      error: "Internal Server Error",
-    });
+    return res
+      .status(500)
+      .json({ success: false, error: "Server error while fetching salaries" });
   }
 };
 
-
-export { addSalary, getSalary , getAllSalaries,getoverSalaries};
+export { addSalary, getSalary , getAllSalaries,getAllSaly,};

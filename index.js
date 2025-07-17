@@ -8,6 +8,7 @@ import salaryRoute from './Route/salaryRoute.js'
 import leaveRoute from './Route/leaveRoute.js';
 import settingRouter from './Route/settingRouter.js'
 import PunchRoute from './Route/punchRoute.js';
+import MasterRouter from './Route/MasterRouter.js';
 import DashbordRouter from './Route/DashbordRoute.js';
 connectToDatabse()
 const app = express ()
@@ -22,6 +23,7 @@ app.use('/v1/leave',leaveRoute )
 app.use('/v1/setting',settingRouter)
 app.use('/v1',PunchRoute);
 app.use('/v1/dashbord',DashbordRouter);
+app.use('/api/v1/master',MasterRouter);
 
 
 

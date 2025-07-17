@@ -16,6 +16,7 @@ const employeeSchema = new Schema({
     type: Date,
     
   },
+  doj: { type: Date, required: true },
  gender: {
         type: String
     },
@@ -33,10 +34,7 @@ const employeeSchema = new Schema({
         ref: "Department",
         required: true
     },
-  salary: {
-    type: Number,
-    required: true,
-  },
+
   address:{ 
     type: String,
     required: true},
